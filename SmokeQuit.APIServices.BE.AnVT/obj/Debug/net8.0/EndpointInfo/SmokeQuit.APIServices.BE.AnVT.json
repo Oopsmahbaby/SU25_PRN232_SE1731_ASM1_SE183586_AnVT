@@ -1,0 +1,1394 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "SmokeQuit.APIServices.BE.AnVT",
+    "version": "1.0"
+  },
+  "paths": {
+    "/api/BlogPostsAnVts/{pageNumber}/{pageSize}": {
+      "get": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BlogPostsAnVts": {
+      "get": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVtDto"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVtDto"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVtDto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BlogPostsAnVts/{id}": {
+      "get": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVt"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVt"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVt"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVt"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVt"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BlogPostsAnVt"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "integer",
+                  "format": "int32"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "boolean"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BlogPostsAnVts/search": {
+      "get": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "planId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isPublic",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/BlogPostsAnVt"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/BlogPostsAnVts/searchWithPaging": {
+      "get": {
+        "tags": [
+          "BlogPostsAnVts"
+        ],
+        "parameters": [
+          {
+            "name": "pageNumber",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "pageSize",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "planId",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "category",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "tags",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "isPublic",
+            "in": "query",
+            "schema": {
+              "type": "boolean"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BlogPostsAnVtPagedResult"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/QuitPlansAnhDtn_AnVT": {
+      "get": {
+        "tags": [
+          "QuitPlansAnhDtn_AnVT"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuitPlansAnhDtn"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuitPlansAnhDtn"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/QuitPlansAnhDtn"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/SystemUserAccounts/Login": {
+      "post": {
+        "tags": [
+          "SystemUserAccounts"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/LoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/api/SystemUserAccounts/All": {
+      "get": {
+        "tags": [
+          "SystemUserAccounts"
+        ],
+        "responses": {
+          "200": {
+            "description": "Success"
+          }
+        }
+      }
+    },
+    "/WeatherForecast": {
+      "get": {
+        "tags": [
+          "WeatherForecast"
+        ],
+        "operationId": "GetWeatherForecast",
+        "responses": {
+          "200": {
+            "description": "Success",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/WeatherForecast"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AchievementNhuNq": {
+        "type": "object",
+        "properties": {
+          "achievementNhuNqid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievementName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteriaType": {
+            "type": "string",
+            "nullable": true
+          },
+          "criteriaValue": {
+            "type": "number",
+            "format": "double"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "userAchievementNhuNqs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAchievementNhuNq"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogPostsAnVt": {
+        "type": "object",
+        "properties": {
+          "blogPostsAnVtid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "viewsCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "likesCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "commentsCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "plan": {
+            "$ref": "#/components/schemas/QuitPlansAnhDtn"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogPostsAnVtDto": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "title": {
+            "type": "string",
+            "nullable": true
+          },
+          "content": {
+            "type": "string",
+            "nullable": true
+          },
+          "category": {
+            "type": "string",
+            "nullable": true
+          },
+          "tags": {
+            "type": "string",
+            "nullable": true
+          },
+          "isPublic": {
+            "type": "boolean"
+          },
+          "viewsCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "likesCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "commentsCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "BlogPostsAnVtPagedResult": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BlogPostsAnVt"
+            },
+            "nullable": true
+          },
+          "totalCount": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "ChatsLocDpx": {
+        "type": "object",
+        "properties": {
+          "chatsLocDpxid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "coachId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "sentBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "messageType": {
+            "type": "string",
+            "nullable": true
+          },
+          "isRead": {
+            "type": "boolean"
+          },
+          "attachmentUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "responseTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "coach": {
+            "$ref": "#/components/schemas/CoachesLocDpx"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CoachesLocDpx": {
+        "type": "object",
+        "properties": {
+          "coachesLocDpxid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phoneNumber": {
+            "type": "string",
+            "nullable": true
+          },
+          "bio": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "chatsLocDpxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatsLocDpx"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DateOnly": {
+        "type": "object",
+        "properties": {
+          "year": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "month": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "day": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "dayOfWeek": {
+            "$ref": "#/components/schemas/DayOfWeek"
+          },
+          "dayOfYear": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "dayNumber": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "DayOfWeek": {
+        "enum": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6
+        ],
+        "type": "integer",
+        "format": "int32"
+      },
+      "LeaderboardsDuongLnt": {
+        "type": "object",
+        "properties": {
+          "leaderboardsDuongLntid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "daySmokeFree": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "moneySave": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "rankPosition": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "totalAchievements": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "progressScore": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "note": {
+            "type": "string",
+            "nullable": true
+          },
+          "streakCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "communityContribution": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "isTopRanked": {
+            "type": "boolean",
+            "nullable": true
+          },
+          "lastUpdate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "createdTime": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "plan": {
+            "$ref": "#/components/schemas/QuitPlansAnhDtn"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "LoginRequest": {
+        "type": "object",
+        "properties": {
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "MembershipPlansAnhDtn": {
+        "type": "object",
+        "properties": {
+          "membershipPlansAnhDtnid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "planName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "durationDays": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "quitPlansAnhDtns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuitPlansAnhDtn"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProgressRecordsHoangPx": {
+        "type": "object",
+        "properties": {
+          "progressRecordsHoangPxid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "supportMethodId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "cigarettesSmoked": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "healthStatus": {
+            "type": "string",
+            "nullable": true
+          },
+          "moneySaved": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "daysSmokeFree": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "recordedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "mood": {
+            "type": "string",
+            "nullable": true
+          },
+          "hadCraving": {
+            "type": "boolean"
+          },
+          "cravingLevel": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "notes": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "supportMethod": {
+            "$ref": "#/components/schemas/SupportMethodsHoangPx"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "QuitPlansAnhDtn": {
+        "type": "object",
+        "properties": {
+          "quitPlansAnhDtnid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "membershipPlanId": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "reason": {
+            "type": "string",
+            "nullable": true
+          },
+          "startDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "expectedQuitDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "dailyCigaretteTarget": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "weeklyCheckinFrequency": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "motivationalMessage": {
+            "type": "string",
+            "nullable": true
+          },
+          "healthGoals": {
+            "type": "string",
+            "nullable": true
+          },
+          "budgetSavingGoal": {
+            "type": "number",
+            "format": "double",
+            "nullable": true
+          },
+          "receiveMotivationReminder": {
+            "type": "boolean"
+          },
+          "isCustomizedPlan": {
+            "type": "boolean"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "blogPostsAnVts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BlogPostsAnVt"
+            },
+            "nullable": true
+          },
+          "leaderboardsDuongLnts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeaderboardsDuongLnt"
+            },
+            "nullable": true
+          },
+          "membershipPlan": {
+            "$ref": "#/components/schemas/MembershipPlansAnhDtn"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "SupportMethodsHoangPx": {
+        "type": "object",
+        "properties": {
+          "supportMethodsHoangPxid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "methodName": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "progressRecordsHoangPxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProgressRecordsHoangPx"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SystemUserAccount": {
+        "type": "object",
+        "properties": {
+          "userAccountId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userName": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "roleId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "requestCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "applicationCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "modifiedDate": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "modifiedBy": {
+            "type": "string",
+            "nullable": true
+          },
+          "isActive": {
+            "type": "boolean"
+          },
+          "blogPostsAnVts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BlogPostsAnVt"
+            },
+            "nullable": true
+          },
+          "chatsLocDpxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ChatsLocDpx"
+            },
+            "nullable": true
+          },
+          "leaderboardsDuongLnts": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/LeaderboardsDuongLnt"
+            },
+            "nullable": true
+          },
+          "progressRecordsHoangPxes": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProgressRecordsHoangPx"
+            },
+            "nullable": true
+          },
+          "quitPlansAnhDtns": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/QuitPlansAnhDtn"
+            },
+            "nullable": true
+          },
+          "userAchievementNhuNqs": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserAchievementNhuNq"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserAchievementNhuNq": {
+        "type": "object",
+        "properties": {
+          "userAchievementNhuNqid": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievementId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "achievedAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "shared": {
+            "type": "boolean"
+          },
+          "notificationSent": {
+            "type": "boolean"
+          },
+          "rewardPoints": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "commentCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "likeCount": {
+            "type": "integer",
+            "format": "int32",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time",
+            "nullable": true
+          },
+          "achievement": {
+            "$ref": "#/components/schemas/AchievementNhuNq"
+          },
+          "user": {
+            "$ref": "#/components/schemas/SystemUserAccount"
+          }
+        },
+        "additionalProperties": false
+      },
+      "WeatherForecast": {
+        "type": "object",
+        "properties": {
+          "date": {
+            "$ref": "#/components/schemas/DateOnly"
+          },
+          "temperatureC": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "temperatureF": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "summary": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "securitySchemes": {
+      "Bearer": {
+        "type": "http",
+        "description": "Please enter a valid token",
+        "scheme": "Bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "Bearer": [ ]
+    }
+  ]
+}

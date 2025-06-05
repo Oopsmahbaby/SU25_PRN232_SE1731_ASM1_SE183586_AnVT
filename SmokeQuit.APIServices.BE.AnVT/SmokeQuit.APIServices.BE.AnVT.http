@@ -1,0 +1,6 @@
+@SmokeQuit.APIServices.BE.AnVT_HostAddress = http://localhost:5240
+
+GET {{SmokeQuit.APIServices.BE.AnVT_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
