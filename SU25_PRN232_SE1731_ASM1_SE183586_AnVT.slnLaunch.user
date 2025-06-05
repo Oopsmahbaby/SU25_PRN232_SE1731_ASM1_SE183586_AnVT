@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "SmokeQuit.APIServices.BE.AnVT\\SmokeQuit.APIServices.BE.AnVT.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "SmokeQuit.MVCWebApp.FE.AnVT\\SmokeQuit.MVCWebApp.FE.AnVT.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
