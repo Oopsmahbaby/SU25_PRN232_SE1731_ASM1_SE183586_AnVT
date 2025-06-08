@@ -406,3 +406,12 @@ FodyWeavers.xsd
 *.sln.iml
 SmokeQuit.Services.AnVT/obj/Debug/net8.0
 SmokeQuit.MVCWebApp.FE.AnVT/obj/Debug/net8.0
+SmokeQuit.APIServices.BE.AnVT/bin/Debug/net8.0
+.vs/SU25_PRN232_SE1731_ASM1_SE183586_AnVT/v17
+SmokeQuit.APIServices.BE.AnVT/obj/Debug
+SmokeQuit.MVCWebApp.FE.AnVT/bin/Debug/net8.0
+SmokeQuit.Repositories.AnVT/bin
+SmokeQuit.Services.AnVT/bin/Debug
+SmokeQuit.Repositories.AnVT/obj
+.vs/SU25_PRN232_SE1731_ASM1_SE183586_AnVT/CopilotIndices
+.vs/SU25_PRN232_SE1731_ASM1_SE183586_AnVT/DesignTimeBuild

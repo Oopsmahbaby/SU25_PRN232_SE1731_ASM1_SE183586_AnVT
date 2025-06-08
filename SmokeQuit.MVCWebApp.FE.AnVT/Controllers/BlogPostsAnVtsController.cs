@@ -28,7 +28,7 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 				Category = category,
 				Tags = tag,
 				PageNumber = pageNumber,
-				PageSize = 5 // Số lượng bản ghi trên mỗi trang
+				PageSize = 3 // Số lượng bản ghi trên mỗi trang
 			};
 
 			using (var httpClient = new HttpClient())
@@ -57,19 +57,6 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 							);
 
 							return View(pagedList);
-						}
-
-						if (result != null)
-						{
-							StaticPagedList<BlogPostsAnVt> pagedList = new StaticPagedList<BlogPostsAnVt>(
-								result.Items,
-								result.PageNumber,
-								result.PageSize,
-								result.TotalCount
-							);
-
-							return View(result);
-
 						}
 					}
 					else
