@@ -209,44 +209,14 @@
     "ContainingType": "SmokeQuit.APIServices.BE.AnVT.Controllers.BlogPostsAnVtsController",
     "Method": "SearchWithPagingAsync",
     "RelativePath": "api/BlogPostsAnVts/searchWithPaging",
-    "HttpMethod": "GET",
+    "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "pageNumber",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "pageSize",
-        "Type": "System.Int32",
-        "IsRequired": false
-      },
-      {
-        "Name": "planId",
-        "Type": "System.Nullable\u00601[[System.Int32, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
-      },
-      {
-        "Name": "title",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "category",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "tags",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "isPublic",
-        "Type": "System.Nullable\u00601[[System.Boolean, System.Private.CoreLib, Version=8.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]]",
-        "IsRequired": false
+        "Name": "request",
+        "Type": "SmokeQuit.Repositories.AnVT.ModelExtensions.BlogPostSearchRequest",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": [
@@ -284,7 +254,7 @@
   {
     "ContainingType": "SmokeQuit.APIServices.BE.AnVT.Controllers.SystemUserAccountsController",
     "Method": "GetAllUserAccounts",
-    "RelativePath": "api/SystemUserAccounts/All",
+    "RelativePath": "api/SystemUserAccounts",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,

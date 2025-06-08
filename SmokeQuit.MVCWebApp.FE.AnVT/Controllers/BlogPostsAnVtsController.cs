@@ -1,14 +1,10 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using SmokeQuit.Repositories.AnVT.DBContext;
+using SmokeQuit.Repositories.AnVT.ModelExtensions;
 using SmokeQuit.Repositories.AnVT.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using X.PagedList;
 
 namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 {
@@ -24,14 +20,23 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 		private string APIEndPoint = "https://localhost:7184/api/";
 
 		// GET: BlogPostsAnVts
-		public async Task<IActionResult> Index()
+		public async Task<IActionResult> Index(string? tille, string? category, string? tag, int pageNumber = 1)
 		{
+			BlogPostSearchRequest searchRequestWithFilter = new BlogPostSearchRequest
+			{
+				Title = tille,
+				Category = category,
+				Tags = tag,
+				PageNumber = pageNumber,
+				PageSize = 5 // Số lượng bản ghi trên mỗi trang
+			};
+
 			using (var httpClient = new HttpClient())
 			{
 				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
 				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
 
-				using (var response = await httpClient.GetAsync(APIEndPoint + "BlogPostsAnVts"))
+				using (var response = await httpClient.PostAsJsonAsync(APIEndPoint + "BlogPostsAnVts/searchWithPaging", searchRequestWithFilter))
 				{
 					if (response.IsSuccessStatusCode)
 					{
@@ -40,11 +45,31 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 						// Log để kiểm tra dữ liệu nhận được
 						Console.WriteLine("API content: " + content);
 
-						var result = JsonConvert.DeserializeObject<List<BlogPostsAnVt>>(content);
+						var result = JsonConvert.DeserializeObject<PagedResult<BlogPostsAnVt>>(content);
 
-						if (result != null && result.Any())
+						if (result != null && result.PageNumber > 0 && result.PageSize > 0)
 						{
+							var pagedList = new StaticPagedList<BlogPostsAnVt>(
+								result.Items,
+								result.PageNumber,
+								result.PageSize,
+								result.TotalCount
+							);
+
+							return View(pagedList);
+						}
+
+						if (result != null)
+						{
+							StaticPagedList<BlogPostsAnVt> pagedList = new StaticPagedList<BlogPostsAnVt>(
+								result.Items,
+								result.PageNumber,
+								result.PageSize,
+								result.TotalCount
+							);
+
 							return View(result);
+
 						}
 					}
 					else
@@ -59,63 +84,74 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 
 
 		// GET: quitPlansAnhDtns/Create
-		public async Task<IActionResult> Create()
-		{
-			try
-			{
-				var token = HttpContext.Request.Cookies["TokenString"];
-				if (string.IsNullOrEmpty(token))
-				{
-					TempData["Error"] = "Token is missing.";
-					await LoadDropdownData(null, null, null);
-					return View(new BlogPostsAnVt());
-				}
+		//public async Task<IActionResult> Create()
+		//{
+		//	try
+		//	{
+		//		var token = HttpContext.Request.Cookies["TokenString"];
+		//		if (string.IsNullOrEmpty(token))
+		//		{
+		//			TempData["Error"] = "Token is missing.";
+		//			await LoadDropdownData(null, null, null);
+		//			return View(new BlogPostsAnVt());
+		//		}
 
-				List<QuitPlansAnhDtn> achievements = null;
-				List<SystemUserAccount> users = null;
+		//		List<QuitPlansAnhDtn> achievements = null;
+		//		List<SystemUserAccount> users = null;
 
-				using var client = new HttpClient();
-				client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+		//		using var client = new HttpClient();
+		//		client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
 
-				var blogPosts = await client.GetAsync(APIEndPoint + "BlogPostsAnVts");
-				var userRes = await client.GetAsync(APIEndPoint + "SystemUserAccounts/All"); // <-- đúng endpoint
+		//		var blogPosts = await client.GetAsync(APIEndPoint + "BlogPostsAnVts");
+		//		var userRes = await client.GetAsync(APIEndPoint + "SystemUserAccounts"); // <-- đúng endpoint
 
-				if (!blogPosts.IsSuccessStatusCode || !userRes.IsSuccessStatusCode)
-				{
-					TempData["Error"] = $"Failed to load dropdowns. Achievements: {blogPosts.StatusCode}, Users: {userRes.StatusCode}";
-				}
+		//		if (!blogPosts.IsSuccessStatusCode || !userRes.IsSuccessStatusCode)
+		//		{
+		//			TempData["Error"] = $"Failed to load dropdowns. Achievements: {blogPosts.StatusCode}, Users: {userRes.StatusCode}";
+		//		}
 
-				try
-				{
-					achievements = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(await blogPosts.Content.ReadAsStringAsync());
-				}
-				catch (Exception ex)
-				{
-					TempData["Error"] += $" | Error deserializing achievements: {ex.Message}";
-				}
+		//		try
+		//		{
+		//			achievements = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(await blogPosts.Content.ReadAsStringAsync());
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			TempData["Error"] += $" | Error deserializing achievements: {ex.Message}";
+		//		}
 
-				try
-				{
-					users = JsonConvert.DeserializeObject<List<SystemUserAccount>>(await userRes.Content.ReadAsStringAsync());
-				}
-				catch (Exception ex)
-				{
-					TempData["Error"] += $" | Error deserializing users: {ex.Message}";
-				}
+		//		try
+		//		{
+		//			users = JsonConvert.DeserializeObject<List<SystemUserAccount>>(await userRes.Content.ReadAsStringAsync());
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			TempData["Error"] += $" | Error deserializing users: {ex.Message}";
+		//		}
 
-				await LoadDropdownData(achievements, users, token);
+		//		await LoadDropdownData(achievements, users, token);
 
-				return View(new BlogPostsAnVt());
-			}
-			catch (Exception ex)
-			{
-				TempData["Error"] = "Unexpected error: " + ex.Message;
-				await LoadDropdownData(null, null, null);
-				return View(new BlogPostsAnVt());
-			}
-		}
+		//		return View(new BlogPostsAnVt());
+		//	}
+		//	catch (Exception ex)
+		//	{
+		//		TempData["Error"] = "Unexpected error: " + ex.Message;
+		//		await LoadDropdownData(null, null, null);
+		//		return View(new BlogPostsAnVt());
+		//	}
+		//}
 
 		// POST: quitPlansAnhDtns/Create
+		#region Create
+		// GET: blogPostsAnVts/Create
+		public async Task<IActionResult> Create()
+		{
+			ViewBag.PlanList = new SelectList(await GetPlans(), "QuitPlansAnhDtnid", "Reason");
+
+			ViewBag.UserList = new SelectList(await GetUsers(), "UserAccountId", "UserName");
+			return View();
+		}
+		#endregion
+
 		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(BlogPostsAnVt blogPostsAnVt)
@@ -125,16 +161,17 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 				if (!ModelState.IsValid)
 				{
 					TempData["Error"] = "Model state is invalid.";
-					await ReloadDropdowns(blogPostsAnVt);
-					return View(blogPostsAnVt);
+					//await ReloadDropdowns(blogPostsAnVt);
+					//return View(blogPostsAnVt);
 				}
 
 				var token = HttpContext.Request.Cookies["TokenString"];
+
 				if (string.IsNullOrEmpty(token))
 				{
 					TempData["Error"] = "Token is missing.";
-					await ReloadDropdowns(blogPostsAnVt);
-					return View(blogPostsAnVt);
+					//await ReloadDropdowns(blogPostsAnVt);
+					//return View(blogPostsAnVt);
 				}
 
 				using var client = new HttpClient();
@@ -146,7 +183,7 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 
 				if (response.IsSuccessStatusCode)
 				{
-					TempData["Success"] = "UserAchievement created successfully.";
+					TempData["Success"] = "New BlogPostsAnVt is created successfully.";
 					return RedirectToAction(nameof(Index));
 				}
 
@@ -158,193 +195,186 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 				TempData["Error"] = "Exception while creating: " + ex.Message;
 			}
 
-			await ReloadDropdowns(blogPostsAnVt);
+			//await ReloadDropdowns(blogPostsAnVt);
 			return View(blogPostsAnVt);
 		}
 
 		// Helper to load dropdowns
-		private async Task ReloadDropdowns(BlogPostsAnVt selected)
+		//private async Task ReloadDropdowns(BlogPostsAnVt selected)
+		//{
+		//	var token = HttpContext.Request.Cookies["TokenString"];
+		//	List<QuitPlansAnhDtn> achievements = new();
+		//	List<SystemUserAccount> users = new();
+
+		//	if (!string.IsNullOrEmpty(token))
+		//	{
+		//		try
+		//		{
+		//			using var client = new HttpClient();
+		//			client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+
+		//			var blogPosts = await client.GetAsync(APIEndPoint + "QuitPlansAnhDtn");
+		//			var userRes = await client.GetAsync(APIEndPoint + "SystemUserAccounts/All");
+
+		//			if (blogPosts.IsSuccessStatusCode)
+		//				achievements = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(await blogPosts.Content.ReadAsStringAsync());
+
+		//			if (userRes.IsSuccessStatusCode)
+		//				users = JsonConvert.DeserializeObject<List<SystemUserAccount>>(await userRes.Content.ReadAsStringAsync());
+		//		}
+		//		catch (Exception ex)
+		//		{
+		//			TempData["Error"] += " | Reload dropdowns failed: " + ex.Message;
+		//		}
+		//	}
+
+		//	await LoadDropdownData(achievements, users, token, selected);
+		//}
+
+		// Bind data to dropdowns
+		//private Task LoadDropdownData(List<QuitPlansAnhDtn> quitPlanAnhDtn, List<SystemUserAccount> users, string token, BlogPostsAnVt selected = null)
+		//{
+		//	quitPlanAnhDtn ??= new();
+		//	users ??= new();
+
+		//	ViewBag.PlanList = new SelectList(quitPlanAnhDtn, "QuitPlansAnhDtnid", "UserId", selected?.PlanId);
+		//	ViewBag.UserList = new SelectList(users, "UserAccountId", "UserName", selected?.UserId);
+
+		//	return Task.CompletedTask;
+		//}
+
+
+		#region Get Plans trong bảng phụ
+		private async Task<List<QuitPlansAnhDtn>> GetPlans()
 		{
-			var token = HttpContext.Request.Cookies["TokenString"];
-			List<QuitPlansAnhDtn> achievements = new();
-			List<SystemUserAccount> users = new();
-
-			if (!string.IsNullOrEmpty(token))
+			using (var httpClient = new HttpClient())
 			{
-				try
+				// Add Token to header of Request
+				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+
+				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
+
+				using (var response = await httpClient.GetAsync(APIEndPoint + "QuitPlansAnhDtn_AnVT"))
 				{
-					using var client = new HttpClient();
-					client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
+					if (response.IsSuccessStatusCode)
+					{
+						var content = await response.Content.ReadAsStringAsync();
+						var result = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(content);
 
-					var blogPosts = await client.GetAsync(APIEndPoint + "QuitPlansAnhDtn");
-					var userRes = await client.GetAsync(APIEndPoint + "SystemUserAccounts/All");
-
-					if (blogPosts.IsSuccessStatusCode)
-						achievements = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(await blogPosts.Content.ReadAsStringAsync());
-
-					if (userRes.IsSuccessStatusCode)
-						users = JsonConvert.DeserializeObject<List<SystemUserAccount>>(await userRes.Content.ReadAsStringAsync());
-				}
-				catch (Exception ex)
-				{
-					TempData["Error"] += " | Reload dropdowns failed: " + ex.Message;
+						if (result != null)
+						{
+							return result;
+						}
+					}
 				}
 			}
 
-			await LoadDropdownData(achievements, users, token, selected);
+			return new List<QuitPlansAnhDtn>();
 		}
+		#endregion
 
-		// Bind data to dropdowns
-		private Task LoadDropdownData(List<QuitPlansAnhDtn> quitPlanAnhDtn, List<SystemUserAccount> users, string token, BlogPostsAnVt selected = null)
+		#region Get trong bảng User
+		private async Task<List<SystemUserAccount>> GetUsers()
 		{
-			quitPlanAnhDtn ??= new();
-			users ??= new();
+			using (var httpClient = new HttpClient())
+			{
+				// Add Token to header of Request
+				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
 
-			ViewBag.PlanList = new SelectList(quitPlanAnhDtn, "QuitPlansAnhDtnid", "UserId", selected?.PlanId);
-			ViewBag.UserList = new SelectList(users, "UserAccountId", "UserName", selected?.UserId);
+				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
 
-			return Task.CompletedTask;
+				using (var response = await httpClient.GetAsync(APIEndPoint + "SystemUserAccounts"))
+				{
+					if (response.IsSuccessStatusCode)
+					{
+						var content = await response.Content.ReadAsStringAsync();
+						var result = JsonConvert.DeserializeObject<List<SystemUserAccount>>(content);
+
+						if (result != null)
+						{
+							return result;
+						}
+					}
+				}
+			}
+
+			return new List<SystemUserAccount>();
+		}
+		#endregion
+
+
+		// GET: BlogPostsAnVts/Edit/5
+		public async Task<IActionResult> Edit(int? id)
+		{
+			if (id == null)
+			{
+				return NotFound();
+			}
+
+			BlogPostsAnVt blogPostsAnVt = null;
+
+			using (var httpClient = new HttpClient())
+			{
+				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
+
+				var response = await httpClient.GetAsync(APIEndPoint + "BlogPostsAnVts/" + id);
+				if (response.IsSuccessStatusCode)
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					blogPostsAnVt = JsonConvert.DeserializeObject<BlogPostsAnVt>(content);
+				}
+			}
+
+			if (blogPostsAnVt == null)
+			{
+				return NotFound();
+			}
+
+			ViewData["UserId"] = new SelectList(await GetUsers(), "UserAccountId", "UserName", blogPostsAnVt.UserId);
+			ViewData["PlanId"] = new SelectList(await GetPlans(), "QuitPlansAnhDtnid", "Reason", blogPostsAnVt.PlanId);
+
+			return View(blogPostsAnVt);
 		}
 
-		// GET: BlogPostsAnVts/Details/5
-		//public async Task<IActionResult> Details(int? id)
-		//{
-		//    if (id == null)
-		//    {
-		//        return NotFound();
-		//    }
+		// POST: BlogPostsAnVts/Edit/5
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Edit(int id, BlogPostsAnVt blogPostsAnVt)
+		{
+			if (id != blogPostsAnVt.BlogPostsAnVtid)
+			{
+				return NotFound();
+			}
 
-		//    var blogPostsAnVt = await _context.BlogPostsAnVts
-		//        .Include(b => b.Plan)
-		//        .Include(b => b.User)
-		//        .FirstOrDefaultAsync(m => m.BlogPostsAnVtid == id);
-		//    if (blogPostsAnVt == null)
-		//    {
-		//        return NotFound();
-		//    }
+			blogPostsAnVt.UserId = 1;
+			if (ModelState.IsValid)
+			{
+				using (var httpClient = new HttpClient())
+				{
+					var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+					httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
 
-		//    return View(blogPostsAnVt);
-		//}
+					using (var response = await httpClient.PutAsJsonAsync(APIEndPoint + "BlogPostsAnVts/" + id, blogPostsAnVt))
+					{
+						if (response.IsSuccessStatusCode)
+						{
+							var content = await response.Content.ReadAsStringAsync();
+							var result = JsonConvert.DeserializeObject<int>(content);
 
-		//// GET: BlogPostsAnVts/Create
-		//public IActionResult Create()
-		//{
-		//    ViewData["PlanId"] = new SelectList(_context.QuitPlansAnhDtns, "QuitPlansAnhDtnid", "Reason");
-		//    ViewData["UserId"] = new SelectList(_context.SystemUserAccounts, "UserAccountId", "Email");
-		//    return View();
-		//}
+							if (result > 0)
+							{
+								return RedirectToAction(nameof(Index));
+							}
+						}
+					}
+				}
+			}
 
-		//// POST: BlogPostsAnVts/Create
-		//// To protect from overposting attacks, enable the specific properties you want to bind to.
-		//// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public async Task<IActionResult> Create([Bind("BlogPostsAnVtid,UserId,PlanId,Title,Content,Category,Tags,IsPublic,ViewsCount,LikesCount,CommentsCount,CreatedAt,UpdatedAt")] BlogPostsAnVt blogPostsAnVt)
-		//{
-		//    if (ModelState.IsValid)
-		//    {
-		//        _context.Add(blogPostsAnVt);
-		//        await _context.SaveChangesAsync();
-		//        return RedirectToAction(nameof(Index));
-		//    }
-		//    ViewData["PlanId"] = new SelectList(_context.QuitPlansAnhDtns, "QuitPlansAnhDtnid", "Reason", blogPostsAnVt.PlanId);
-		//    ViewData["UserId"] = new SelectList(_context.SystemUserAccounts, "UserAccountId", "Email", blogPostsAnVt.UserId);
-		//    return View(blogPostsAnVt);
-		//}
+			ViewData["UserId"] = new SelectList(await GetUsers(), "UserAccountId", "UserName", blogPostsAnVt.UserId);
+			ViewData["PlanId"] = new SelectList(await GetPlans(), "QuitPlansAnhDtnid", "Reason", blogPostsAnVt.PlanId);
 
-		//// GET: BlogPostsAnVts/Edit/5
-		//public async Task<IActionResult> Edit(int? id)
-		//{
-		//    if (id == null)
-		//    {
-		//        return NotFound();
-		//    }
-
-		//    var blogPostsAnVt = await _context.BlogPostsAnVts.FindAsync(id);
-		//    if (blogPostsAnVt == null)
-		//    {
-		//        return NotFound();
-		//    }
-		//    ViewData["PlanId"] = new SelectList(_context.QuitPlansAnhDtns, "QuitPlansAnhDtnid", "Reason", blogPostsAnVt.PlanId);
-		//    ViewData["UserId"] = new SelectList(_context.SystemUserAccounts, "UserAccountId", "Email", blogPostsAnVt.UserId);
-		//    return View(blogPostsAnVt);
-		//}
-
-		//// POST: BlogPostsAnVts/Edit/5
-		//// To protect from overposting attacks, enable the specific properties you want to bind to.
-		//// For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-		//[HttpPost]
-		//[ValidateAntiForgeryToken]
-		//public async Task<IActionResult> Edit(int id, [Bind("BlogPostsAnVtid,UserId,PlanId,Title,Content,Category,Tags,IsPublic,ViewsCount,LikesCount,CommentsCount,CreatedAt,UpdatedAt")] BlogPostsAnVt blogPostsAnVt)
-		//{
-		//    if (id != blogPostsAnVt.BlogPostsAnVtid)
-		//    {
-		//        return NotFound();
-		//    }
-
-		//    if (ModelState.IsValid)
-		//    {
-		//        try
-		//        {
-		//            _context.Update(blogPostsAnVt);
-		//            await _context.SaveChangesAsync();
-		//        }
-		//        catch (DbUpdateConcurrencyException)
-		//        {
-		//            if (!BlogPostsAnVtExists(blogPostsAnVt.BlogPostsAnVtid))
-		//            {
-		//                return NotFound();
-		//            }
-		//            else
-		//            {
-		//                throw;
-		//            }
-		//        }
-		//        return RedirectToAction(nameof(Index));
-		//    }
-		//    ViewData["PlanId"] = new SelectList(_context.QuitPlansAnhDtns, "QuitPlansAnhDtnid", "Reason", blogPostsAnVt.PlanId);
-		//    ViewData["UserId"] = new SelectList(_context.SystemUserAccounts, "UserAccountId", "Email", blogPostsAnVt.UserId);
-		//    return View(blogPostsAnVt);
-		//}
-
-		//// GET: BlogPostsAnVts/Delete/5
-		//public async Task<IActionResult> Delete(int? id)
-		//{
-		//    if (id == null)
-		//    {
-		//        return NotFound();
-		//    }
-
-		//    var blogPostsAnVt = await _context.BlogPostsAnVts
-		//        .Include(b => b.Plan)
-		//        .Include(b => b.User)
-		//        .FirstOrDefaultAsync(m => m.BlogPostsAnVtid == id);
-		//    if (blogPostsAnVt == null)
-		//    {
-		//        return NotFound();
-		//    }
-
-		//    return View(blogPostsAnVt);
-		//}
-
-		//// POST: BlogPostsAnVts/Delete/5
-		//[HttpPost, ActionName("Delete")]
-		//[ValidateAntiForgeryToken]
-		//public async Task<IActionResult> DeleteConfirmed(int id)
-		//{
-		//    var blogPostsAnVt = await _context.BlogPostsAnVts.FindAsync(id);
-		//    if (blogPostsAnVt != null)
-		//    {
-		//        _context.BlogPostsAnVts.Remove(blogPostsAnVt);
-		//    }
-
-		//    await _context.SaveChangesAsync();
-		//    return RedirectToAction(nameof(Index));
-		//}
-
-		//private bool BlogPostsAnVtExists(int id)
-		//{
-		//    return _context.BlogPostsAnVts.Any(e => e.BlogPostsAnVtid == id);
-		//}
+			return View(blogPostsAnVt);
+		}
 	}
 }

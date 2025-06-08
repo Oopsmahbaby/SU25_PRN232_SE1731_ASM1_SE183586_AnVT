@@ -104,3 +104,4 @@ D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.AP
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.APIServices.BE.AnVT\obj\Debug\net8.0\SmokeQuit.APIServices.BE.AnVT.genruntimeconfig.cache
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.APIServices.BE.AnVT\obj\Debug\net8.0\ref\SmokeQuit.APIServices.BE.AnVT.dll
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.APIServices.BE.AnVT\bin\Debug\net8.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.APIServices.BE.AnVT\obj\Debug\net8.0\SmokeQuit.APIServices.BE.AnVT.sourcelink.json

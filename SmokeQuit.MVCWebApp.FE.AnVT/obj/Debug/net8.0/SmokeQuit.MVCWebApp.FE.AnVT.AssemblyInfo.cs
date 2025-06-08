@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SmokeQuit.MVCWebApp.FE.AnVT")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9d4e1e72c4a1b8eb6dadcd3246b93bbc7d54341b")]
 [assembly: System.Reflection.AssemblyProductAttribute("SmokeQuit.MVCWebApp.FE.AnVT")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SmokeQuit.MVCWebApp.FE.AnVT")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

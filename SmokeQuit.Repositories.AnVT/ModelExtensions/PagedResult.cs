@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SmokeQuit.Repositories.AnVT.ModelExtensions
+﻿namespace SmokeQuit.Repositories.AnVT.ModelExtensions
 {
 	public class PagedResult<T>
 	{
