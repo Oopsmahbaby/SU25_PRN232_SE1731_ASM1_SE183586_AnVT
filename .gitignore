@@ -404,3 +404,5 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+SmokeQuit.Services.AnVT/obj/Debug/net8.0
+SmokeQuit.MVCWebApp.FE.AnVT/obj/Debug/net8.0
