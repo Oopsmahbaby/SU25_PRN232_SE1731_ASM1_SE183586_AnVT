@@ -24,3 +24,4 @@ D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.Se
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.Services.AnVT\obj\Debug\net8.0\refint\SmokeQuit.Services.AnVT.dll
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.Services.AnVT\obj\Debug\net8.0\SmokeQuit.Services.AnVT.pdb
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.Services.AnVT\obj\Debug\net8.0\ref\SmokeQuit.Services.AnVT.dll
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.Services.AnVT\obj\Debug\net8.0\SmokeQuit.Services.AnVT.sourcelink.json

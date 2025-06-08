@@ -11,7 +11,7 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 {
 	[Route("api/[controller]")]
 	[ApiController]
-	[Authorize]
+	//[Authorize]
 	public class BlogPostsAnVtsController : ControllerBase
 	{
 		private readonly IBlogPostsAnVTService _blogPostsAnVTService;
@@ -90,18 +90,11 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 		}
 
 		// GET api/<BlogPostsAnVtController>/searchByUserId
-		[Authorize(Roles = "1, 2")]
-		[HttpGet("searchWithPaging")]
-		public async Task<ActionResult<PagedResult<BlogPostsAnVt>>> SearchWithPagingAsync(
-			int pageNumber,
-			int pageSize,
-			int? planId = null,
-			string title = null,
-			string category = null,
-			string tags = null,
-			bool? isPublic = null)
+		//[Authorize(Roles = "1, 2")]
+		[HttpPost("searchWithPaging")]
+		public async Task<ActionResult<PagedResult<BlogPostsAnVt>>> SearchWithPagingAsync([FromBody] BlogPostSearchRequest request)
 		{
-			var result = await _blogPostsAnVTService.SearchWithPagingAsync(pageNumber, pageSize, planId, title, category, tags, isPublic);
+			var result = await _blogPostsAnVTService.SearchWithPagingAsync(request);
 
 			return Ok(result);
 		}

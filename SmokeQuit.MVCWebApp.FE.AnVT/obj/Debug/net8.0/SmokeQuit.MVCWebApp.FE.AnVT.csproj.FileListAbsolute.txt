@@ -257,3 +257,7 @@ D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MV
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\bin\Debug\net8.0\SmokeQuit.Repositories.AnVT.pdb
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\obj\Debug\net8.0\SmokeQuit.MVCWebApp.FE.AnVT.csproj.AssemblyReference.cache
 D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\obj\Debug\net8.0\SmokeQui.2E427A1C.Up2Date
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\obj\Debug\net8.0\SmokeQuit.MVCWebApp.FE.AnVT.sourcelink.json
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\bin\Debug\net8.0\X.PagedList.dll
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\bin\Debug\net8.0\X.PagedList.Mvc.Core.dll
+D:\FPT-25\SU-25\PRN232\Slot_2\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\SmokeQuit.MVCWebApp.FE.AnVT\obj\Debug\net8.0\SmokeQuit.MVCWebApp.FE.AnVT.MvcApplicationPartsAssemblyInfo.cs

@@ -99,39 +99,32 @@ namespace SmokeQuit.Repositories.AnVT
 		return await query.ToListAsync();*/
 		}
 
-		public async Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(
-		int pageNumber,
-		int pageSize,
-		int? planId = null,
-		string title = null,
-		string category = null,
-		string tags = null,
-		bool? isPublic = null)
+		public async Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(BlogPostSearchRequest request)
 		{
 			var query = _context.BlogPostsAnVts
 				.Include(x => x.User)
 				.Include(x => x.Plan)
 				.Where(x =>
-					(!planId.HasValue || x.PlanId == planId.Value) &&
-					(string.IsNullOrWhiteSpace(title) || x.Title.Contains(title)) &&
-					(string.IsNullOrWhiteSpace(category) || x.Category.Contains(category)) &&
-					(string.IsNullOrWhiteSpace(tags) || x.Tags.Contains(tags)) &&
-					(!isPublic.HasValue || x.IsPublic == isPublic.Value)
+					(!request.PlanId.HasValue || x.PlanId == request.PlanId.Value) &&
+					(string.IsNullOrWhiteSpace(request.Title) || x.Title.Contains(request.Title)) &&
+					(string.IsNullOrWhiteSpace(request.Category) || x.Category.Contains(request.Category)) &&
+					(string.IsNullOrWhiteSpace(request.Tags) || x.Tags.Contains(request.Tags)) &&
+					(!request.IsPublic.HasValue || x.IsPublic == request.IsPublic.Value)
 				);
 
 			var totalCount = await query.CountAsync();
 
 			var items = await query
-				.Skip((pageNumber - 1) * pageSize)
-				.Take(pageSize)
+				.Skip((request.PageNumber - 1) * request.PageSize)
+				.Take(request.PageSize)
 				.ToListAsync();
 
 			return new PagedResult<BlogPostsAnVt>
 			{
 				Items = items,
 				TotalCount = totalCount,
-				PageNumber = pageNumber,
-				PageSize = pageSize
+				PageNumber = request.PageNumber,
+				PageSize = request.PageSize
 			};
 		}
 

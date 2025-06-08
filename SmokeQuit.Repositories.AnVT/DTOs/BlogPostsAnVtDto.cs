@@ -27,5 +27,7 @@ namespace SmokeQuit.Repositories.AnVT.DTOs
 		public int? LikesCount { get; set; }
 
 		public int? CommentsCount { get; set; }
+		public DateTime? CreatedAt { get; set; }
+		public DateTime? UpdatedAt { get; set; }
 	}
 }

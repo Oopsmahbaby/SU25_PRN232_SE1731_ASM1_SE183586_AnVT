@@ -11,14 +11,7 @@ namespace SmokeQuit.Services.AnVT
 		Task<PagedResult<BlogPostsAnVt>> GetAllWithPagingAsync(int pageNumber, int pageSize);
 		Task<BlogPostsAnVt> GetByIdAsync(int code);
 		Task<List<BlogPostsAnVt>> SearchAsync(int? planId = null, string title = null, string category = null, string tags = null, bool? isPublic = null);
-		Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(
-			int pageNumber,
-			int pageSize,
-			int? planId = null,
-			string title = null,
-			string category = null,
-			string tags = null,
-			bool? isPublic = null);
+		Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(BlogPostSearchRequest request);
 		Task<int> CreateAsync(BlogPostsAnVtDto blogPost);
 		Task<int> UpdateAsync(BlogPostsAnVt blogPost);
 		Task<bool> DeleteAsync(int code);
@@ -48,6 +41,8 @@ namespace SmokeQuit.Services.AnVT
 				Category = blogPost.Category,
 				Tags = blogPost.Tags,
 				IsPublic = blogPost.IsPublic,
+				CreatedAt = DateTime.Now,
+				UpdatedAt = null,
 			};
 			return _blogPostsAnVTRepository.CreateAsync(entities);
 		}
@@ -88,16 +83,9 @@ namespace SmokeQuit.Services.AnVT
 			return await _blogPostsAnVTRepository.UpdateAsync(blogPost);
 		}
 
-		public async Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(
-			int pageNumber,
-			int pageSize,
-			int? planId = null,
-			string title = null,
-			string category = null,
-			string tags = null,
-			bool? isPublic = null)
+		public async Task<PagedResult<BlogPostsAnVt>> SearchWithPagingAsync(BlogPostSearchRequest request)
 		{
-			return await _blogPostsAnVTRepository.SearchWithPagingAsync(pageNumber, pageSize, planId, title, category, tags, isPublic);
+			return await _blogPostsAnVTRepository.SearchWithPagingAsync(request);
 		}
 	}
 }

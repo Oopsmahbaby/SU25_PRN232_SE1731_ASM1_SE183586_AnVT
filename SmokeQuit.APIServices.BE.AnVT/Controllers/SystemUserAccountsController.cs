@@ -57,7 +57,7 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 			return tokenString;
 		}
 
-		[HttpGet("All")]
+		[HttpGet]
 		public async Task<IActionResult> GetAllUserAccounts()
 		{
 			var users = await _userAccountsService.GetAllUserAccounts();

@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "ocITAbUxNmQ=",
+  "dgSpecHash": "Ged/9cTikG4=",
   "success": true,
   "projectFilePath": "D:\\FPT-25\\SU-25\\PRN232\\Slot_2\\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\\SmokeQuit.MVCWebApp.FE.AnVT\\SmokeQuit.MVCWebApp.FE.AnVT.csproj",
   "expectedPackageFiles": [
@@ -169,7 +169,9 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.threading.tasks.dataflow\\7.0.0\\system.threading.tasks.dataflow.7.0.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
-    "C:\\Users\\ADMIN\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512"
+    "C:\\Users\\ADMIN\\.nuget\\packages\\system.windows.extensions\\7.0.0\\system.windows.extensions.7.0.0.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\x.pagedlist\\10.5.7\\x.pagedlist.10.5.7.nupkg.sha512",
+    "C:\\Users\\ADMIN\\.nuget\\packages\\x.pagedlist.mvc.core\\10.5.7\\x.pagedlist.mvc.core.10.5.7.nupkg.sha512"
   ],
   "logs": []
 }
