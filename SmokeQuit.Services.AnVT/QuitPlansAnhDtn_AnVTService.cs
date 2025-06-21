@@ -23,5 +23,32 @@ namespace SmokeQuit.Services.AnVT
 		{
 			return _quitPlansAnhDtn_AnVTRepository.GetAllAsync();
 		}
+
+		public async Task<QuitPlansAnhDtn?> GetByIdAsync(int id)
+		{
+			return await _quitPlansAnhDtn_AnVTRepository.GetByIdAsync(id);
+		}
+
+		public async Task<QuitPlansAnhDtn?> GetByUserIdAsync(int userId)
+		{
+			var plans = await _quitPlansAnhDtn_AnVTRepository.GetAllAsync();
+			return plans.FirstOrDefault(p => p.UserId == userId);
+		}
+
+		public async Task<int> AddAsync(QuitPlansAnhDtn quitPlan)
+		{
+			return await _quitPlansAnhDtn_AnVTRepository.CreateAsync(quitPlan);
+		}
+
+		public async Task<int> UpdateAsync(QuitPlansAnhDtn quitPlan)
+		{
+			return await _quitPlansAnhDtn_AnVTRepository.UpdateAsync(quitPlan);
+		}
+
+		public async Task<bool> DeleteAsync(int id)
+		{
+			var quitPlansAnhDtn = await _quitPlansAnhDtn_AnVTRepository.GetByIdAsync(id);
+			return await _quitPlansAnhDtn_AnVTRepository.RemoveAsync(quitPlansAnhDtn);
+		}
 	}
 }

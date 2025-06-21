@@ -17,10 +17,10 @@ namespace SmokeQuit.Repositories.AnVT
 			_context = context;
 		}
 
-		public async Task<List<QuitPlansAnhDtn>> GetAllAsync()
-		{
-			var quitPlans = await _context.QuitPlansAnhDtns.Include(x => x.User).ToListAsync();
-			return quitPlans ?? new();
-		}
+		//public async Task<List<QuitPlansAnhDtn>> GetAllAsync()
+		//{
+		//	var quitPlans = await _context.QuitPlansAnhDtns.Include(x => x.User).ToListAsync();
+		//	return quitPlans ?? new();
+		//}
 	}
 }
