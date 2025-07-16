@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.OData.Query;
 using SmokeQuit.Repositories.AnVT.DTOs;
 using SmokeQuit.Repositories.AnVT.ModelExtensions;
 using SmokeQuit.Repositories.AnVT.Models;
@@ -30,9 +31,21 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 			return Ok(blogPosts);
 		}
 
-		[Authorize(Roles = "1, 2")]
+		//[Authorize(Roles = "1, 2")]
 		[HttpGet]
 		public async Task<ActionResult<List<BlogPostsAnVt>>> Get()
+		{
+			var blogPosts = await _blogPostsAnVTService.GetAllAsync();
+			return Ok(blogPosts);
+		}
+
+		/// <summary>
+		/// Filter using oData
+		/// </summary>
+		/// <returns></returns>
+		[HttpGet("searchByOData")]
+		[EnableQuery]
+		public async Task<ActionResult<List<BlogPostsAnVt>>> Search()
 		{
 			var blogPosts = await _blogPostsAnVTService.GetAllAsync();
 			return Ok(blogPosts);
@@ -74,7 +87,7 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 		}
 
 		// DELETE api/<BlogPostsAnVtController>/5
-		[Authorize(Roles = "1")]
+		//[Authorize(Roles = "1")]
 		[HttpDelete("{id}")]
 		public async Task<bool> Delete(int id)
 		{

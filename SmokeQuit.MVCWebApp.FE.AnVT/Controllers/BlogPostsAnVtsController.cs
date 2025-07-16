@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Newtonsoft.Json;
 using SmokeQuit.Repositories.AnVT.ModelExtensions;
@@ -10,14 +11,12 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 {
 	public class BlogPostsAnVtsController : Controller
 	{
-		//private readonly SU25_PRN232_SE1731_G6_SmokeQuitContext _context;
-
-		//public BlogPostsAnVtsController(SU25_PRN232_SE1731_G6_SmokeQuitContext context)
-		//{
-		//    _context = context;
-		//}
-
 		private string APIEndPoint = "https://localhost:7184/api/";
+
+		public IActionResult QuitPlansDuongLnt()
+		{
+			return View();
+		}
 
 		// GET: BlogPostsAnVts
 		public async Task<IActionResult> Index(string? tille, string? category, string? tag, int pageNumber = 1)
@@ -68,64 +67,6 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 
 			return View(new List<BlogPostsAnVt>());
 		}
-
-
-		// GET: quitPlansAnhDtns/Create
-		//public async Task<IActionResult> Create()
-		//{
-		//	try
-		//	{
-		//		var token = HttpContext.Request.Cookies["TokenString"];
-		//		if (string.IsNullOrEmpty(token))
-		//		{
-		//			TempData["Error"] = "Token is missing.";
-		//			await LoadDropdownData(null, null, null);
-		//			return View(new BlogPostsAnVt());
-		//		}
-
-		//		List<QuitPlansAnhDtn> achievements = null;
-		//		List<SystemUserAccount> users = null;
-
-		//		using var client = new HttpClient();
-		//		client.DefaultRequestHeaders.Add("Authorization", "Bearer " + token);
-
-		//		var blogPosts = await client.GetAsync(APIEndPoint + "BlogPostsAnVts");
-		//		var userRes = await client.GetAsync(APIEndPoint + "SystemUserAccounts"); // <-- đúng endpoint
-
-		//		if (!blogPosts.IsSuccessStatusCode || !userRes.IsSuccessStatusCode)
-		//		{
-		//			TempData["Error"] = $"Failed to load dropdowns. Achievements: {blogPosts.StatusCode}, Users: {userRes.StatusCode}";
-		//		}
-
-		//		try
-		//		{
-		//			achievements = JsonConvert.DeserializeObject<List<QuitPlansAnhDtn>>(await blogPosts.Content.ReadAsStringAsync());
-		//		}
-		//		catch (Exception ex)
-		//		{
-		//			TempData["Error"] += $" | Error deserializing achievements: {ex.Message}";
-		//		}
-
-		//		try
-		//		{
-		//			users = JsonConvert.DeserializeObject<List<SystemUserAccount>>(await userRes.Content.ReadAsStringAsync());
-		//		}
-		//		catch (Exception ex)
-		//		{
-		//			TempData["Error"] += $" | Error deserializing users: {ex.Message}";
-		//		}
-
-		//		await LoadDropdownData(achievements, users, token);
-
-		//		return View(new BlogPostsAnVt());
-		//	}
-		//	catch (Exception ex)
-		//	{
-		//		TempData["Error"] = "Unexpected error: " + ex.Message;
-		//		await LoadDropdownData(null, null, null);
-		//		return View(new BlogPostsAnVt());
-		//	}
-		//}
 
 		// POST: quitPlansAnhDtns/Create
 		#region Create
@@ -363,5 +304,102 @@ namespace SmokeQuit.MVCWebApp.FE.AnVT.Controllers
 
 			return View(blogPostsAnVt);
 		}
+
+		// GET: BlogPostsAnVts/Delete/5
+		public async Task<IActionResult> Delete(int? id)
+		{
+			if (id == null) return NotFound();
+
+			if (ModelState.IsValid)
+			{
+				using (var httpClient = new HttpClient())
+				{
+					var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+					httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
+
+					using (var response = await httpClient.GetAsync(APIEndPoint + "BlogPostsAnVts/" + id))
+					{
+						if (response.IsSuccessStatusCode)
+						{
+							var content = await response.Content.ReadAsStringAsync();
+							var result = JsonConvert.DeserializeObject<BlogPostsAnVt>(content);
+
+							if (result != null)
+							{
+								return View(result);
+							}
+						}
+					}
+				}
+			}
+			return View(Index(category: null, tille: null, tag: null));
+		}
+
+		// POST: BlogPostsAnVts/Delete/5
+		[HttpPost, ActionName("Delete")]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> DeleteConfirmed(int id)
+		{
+			using (var httpClient = new HttpClient())
+			{
+				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+
+				if (string.IsNullOrEmpty(tokenString))
+				{
+					return Unauthorized();
+				}
+
+				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
+
+				var response = await httpClient.DeleteAsync(APIEndPoint + $"BlogPostsAnVts/{id}");
+
+				if (response.IsSuccessStatusCode)
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					TempData["Success"] = $"BlogPostsAnVt ({id}) is deleted successfully.";
+					var deleteResult = JsonConvert.DeserializeObject<bool>(content);
+
+					if (deleteResult)
+					{
+						return RedirectToAction(nameof(Index));
+					}
+				}
+				else
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					TempData["Error"] = $"Failed to delete. Status: {response.StatusCode}. Response: {content}";
+				}
+			}
+
+			return RedirectToAction(nameof(Index));
+		}
+
+		public async Task<IActionResult> Details(int? id)
+		{
+			if (id == null) return NotFound();
+
+			using (var httpClient = new HttpClient())
+			{
+				var tokenString = HttpContext.Request.Cookies.FirstOrDefault(c => c.Key == "TokenString").Value;
+				if (string.IsNullOrEmpty(tokenString))
+					return Unauthorized();
+
+				httpClient.DefaultRequestHeaders.Add("Authorization", "Bearer " + tokenString);
+
+				var response = await httpClient.GetAsync(APIEndPoint + $"BlogPostsAnVts/{id}");
+
+				if (response.IsSuccessStatusCode)
+				{
+					var content = await response.Content.ReadAsStringAsync();
+					var result = JsonConvert.DeserializeObject<BlogPostsAnVt>(content);
+
+					if (result != null)
+						return View(result);
+				}
+			}
+
+			return NotFound();
+		}
+
 	}
 }

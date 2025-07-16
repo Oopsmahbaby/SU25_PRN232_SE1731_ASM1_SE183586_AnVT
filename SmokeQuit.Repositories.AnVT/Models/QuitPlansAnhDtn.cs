@@ -2,12 +2,14 @@
 #nullable disable
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace SmokeQuit.Repositories.AnVT.Models;
 
 public partial class QuitPlansAnhDtn
 {
-    public int QuitPlansAnhDtnid { get; set; }
+    [Key]
+	public int QuitPlansAnhDtnid { get; set; }
 
     public int UserId { get; set; }
 

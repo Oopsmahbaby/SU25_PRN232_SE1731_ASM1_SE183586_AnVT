@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "2gVzYprhmFQ=",
+  "dgSpecHash": "VhOlPiNLQxY=",
   "success": true,
   "projectFilePath": "D:\\FPT-25\\SU-25\\PRN232\\Slot_2\\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\\SmokeQuit.Services.AnVT\\SmokeQuit.Services.AnVT.csproj",
   "expectedPackageFiles": [
@@ -66,15 +66,5 @@
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.threading.tasks.extensions\\4.5.4\\system.threading.tasks.extensions.4.5.4.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\system.windows.extensions\\6.0.0\\system.windows.extensions.6.0.0.nupkg.sha512"
   ],
-  "logs": [
-    {
-      "code": "NU1900",
-      "level": "Warning",
-      "message": "Error occurred while getting package vulnerability data: The download of 'https://api.nuget.org/v3-vulnerabilities/2025.05.15.05.31.02/vulnerability.base.json' timed out because no data was received for 60000ms.",
-      "projectPath": "D:\\FPT-25\\SU-25\\PRN232\\Slot_2\\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\\SmokeQuit.Services.AnVT\\SmokeQuit.Services.AnVT.csproj",
-      "warningLevel": 1,
-      "filePath": "D:\\FPT-25\\SU-25\\PRN232\\Slot_2\\SU25_PRN232_SE1731_ASM1_SE183586_AnVT\\SmokeQuit.Services.AnVT\\SmokeQuit.Services.AnVT.csproj",
-      "targetGraphs": []
-    }
-  ]
+  "logs": []
 }

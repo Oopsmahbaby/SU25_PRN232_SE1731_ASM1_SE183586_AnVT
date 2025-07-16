@@ -16,10 +16,68 @@ namespace SmokeQuit.APIServices.BE.AnVT.Controllers
 		}
 		// GET: api/<QuitPlansAnhDtn_AnVTController>
 		[HttpGet]
-		public async Task<ActionResult<List<QuitPlansAnhDtn>>> Get()
+		public async Task<IEnumerable<QuitPlansAnhDtn>> Get()
 		{
-			var plans = await _quitPlansAnhDtn_AnVTService.GetAllAsync();
-			return Ok(plans);
+			return await _quitPlansAnhDtn_AnVTService.GetAllAsync();
 		}
+
+		// GET api/<QuitPlansAnhDtn_AnVTController>/5
+		[HttpGet("{id}")]
+		public async Task<ActionResult<QuitPlansAnhDtn>> Get(int id)
+		{
+			var plan = await _quitPlansAnhDtn_AnVTService.GetByIdAsync(id);
+			if (plan == null)
+			{
+				return NotFound();
+			}
+			return Ok(plan);
+		}
+
+		// POST api/<QuitPlansAnhDtn_AnVTController>
+		[HttpPost]
+		public async Task<ActionResult<int>> Post([FromBody] QuitPlansAnhDtn quitPlan)
+		{
+			if (quitPlan == null)
+				return BadRequest();
+
+			var createdId = await _quitPlansAnhDtn_AnVTService.AddAsync(quitPlan);
+			return Ok(createdId);
+		}
+
+		// PUT api/<QuitPlansAnhDtnController>/5
+		[HttpPut]
+		public async Task<int> Put(QuitPlansAnhDtn quitPlans)
+		{
+			if (ModelState.IsValid)
+			{
+				return await _quitPlansAnhDtn_AnVTService.UpdateAsync(quitPlans);
+			}
+
+			return 0;
+		}
+
+		// DELETE api/<QuitPlansAnhDtn_AnVTController>/5
+		[HttpDelete("{id}")]
+		public async Task<IActionResult> Delete(int id)
+		{
+			var success = await _quitPlansAnhDtn_AnVTService.DeleteAsync(id);
+			if (!success)
+				return NotFound();
+
+			return Ok(success);
+		}
+
+		// GET api/<QuitPlansAnhDtn_AnVTController>/user/5
+		[HttpGet("user/{userId}")]
+		public async Task<ActionResult<QuitPlansAnhDtn>> GetByUserId(int userId)
+		{
+			var plan = await _quitPlansAnhDtn_AnVTService.GetByUserIdAsync(userId);
+			if (plan == null)
+				return NotFound();
+
+			return Ok(plan);
+		}
+
+
 	}
 }

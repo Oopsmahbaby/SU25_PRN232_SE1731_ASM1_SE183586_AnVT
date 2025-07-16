@@ -5,7 +5,12 @@ namespace SmokeQuit.Services.AnVT
 {
 	public interface IQuitPlansAnhDtn_AnVTService
 	{
-			Task<List<QuitPlansAnhDtn>> GetAllAsync();
+		Task<List<QuitPlansAnhDtn>> GetAllAsync();
+		Task<QuitPlansAnhDtn?> GetByIdAsync(int id);
+		Task<QuitPlansAnhDtn?> GetByUserIdAsync(int userId);
+		Task<int> AddAsync(QuitPlansAnhDtn quitPlan);
+		Task<int> UpdateAsync(QuitPlansAnhDtn quitPlan);
+		Task<bool> DeleteAsync(int id);
 	}
 
 	public class QuitPlansAnhDtn_AnVTService : IQuitPlansAnhDtn_AnVTService

@@ -1,8 +1,12 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using Microsoft.OpenApi.Models;
 using SmokeQuit.Repositories.AnVT.DBContext;
+using SmokeQuit.Repositories.AnVT.Models;
 using SmokeQuit.Services.AnVT;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -63,12 +67,35 @@ builder.Services.AddSwaggerGen(option =>
 		}
 	});
 });
+
+static IEdmModel GetEdmModel()
+{
+	var odataBuilder = new ODataConventionModelBuilder();
+	odataBuilder.EntitySet<BlogPostsAnVt>("BlogPostsAnVt"); // EDM - ENTITY DATA MODEL
+	odataBuilder.EntitySet<QuitPlansAnhDtn>("QuitPlansAnhDtn");
+	return odataBuilder.GetEdmModel();
+}
+builder.Services.AddControllers().AddOData(options =>
+{
+	options.Select().Filter().OrderBy().Expand().SetMaxTop(null).Count();
+	options.AddRouteComponents("odata", GetEdmModel());
+});
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<SystemUserAccountService>();
 builder.Services.AddScoped<IQuitPlansAnhDtn_AnVTService, QuitPlansAnhDtn_AnVTService>();
 builder.Services.AddScoped<IBlogPostsAnVTService, BlogPostsAnVTService>();
+
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(policy =>
+	{
+		policy.AllowAnyOrigin()
+			  .AllowAnyHeader()
+			  .AllowAnyMethod();
+	});
+});
 
 var app = builder.Build();
 
@@ -81,6 +108,8 @@ if (app.Environment.IsDevelopment())
 app.UseAuthentication();
 
 app.UseHttpsRedirection();
+
+app.UseCors();
 
 app.UseAuthorization();
 
